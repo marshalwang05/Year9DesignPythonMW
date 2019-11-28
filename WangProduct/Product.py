@@ -1,52 +1,108 @@
 import tkinter as tk
+import random 
+import os
 
-print("Start Program")
+#VARIABLES TOP
+
+#Create question log
+#lists num1, num2, correct are considered parallel arrays
+#A parallel array are arrays where indexes relate
+#num1 = [1,2,5]
+#num2 = [5,7,2]
+#correct = ["yes","no","yes"]
+num1 = [3]
+num2 = [4]
+
+#correct incorrect log
+correct = []
+
+#files
+
+
+
+nums = [3,4]
+size = 36
+
+
+#FUNCTIONS
+def runMe():
+  print("Running")
+
+
+  #You could put an error check here if the box is 
+  #empty
+  result = int(entry.get())
+
+  if (result == nums[0] + nums[1]):
+    entry.config(bg ="white")
+
+    print("Correct")
+    correct.append("yes")
+
+    randNum = random.randint(0,4)
+
+    if (randNum == 0):
+      os.system("say good job")
+    elif (randNum == 1):
+      os.system("say great work!")
+    elif (randNum == 2):
+      os.system("say spectacular")
+    else:
+      os.system("say keep going!")
+  else:
+    correct.append("no")
+  #Generate two new numbers to display for the next question
+  nums[0] = random.randint(0,10)
+  nums[1] = random.randint(0,10)
+
+  num1.append(nums[0])
+  num2.append(nums[1])
+  print(num1)
+  print(num2)
+  print(correct)
+
+  num1Label.config(text = nums[0])
+  num2Label.config(text = nums[1])
+  entry.delete(0, tk.END)
+
+
+def say():
+  print("Says the question")
+  statement = str(nums[0]) + "+" + str(nums[1])+" = what"
+  os.system("say "+statement)
+
+
+#GUI SETUP
 root = tk.Tk()
-root.title
 
-#Title
-title = tk.Label(root, text = "Heat Sheet Maker")
-title.config(width = 25, height = 2, bg="#c5eeff", font = ("arvo bold", 25), fg = "#007691")
-title.grid(columnspan = 5, pady=15, row=0)
+num1Label = tk.Label(root, text = str(nums[0]), font = ("Helvetica",size))
+num1Label.grid(row = 0, column = 0)
 
+operationLabel = tk.Label(root, text = "+", font = ("Helvetica",size))
+operationLabel.grid(row = 0, column = 1)
 
-OptionList = [
-"50 Free",
-"100 Free",
-"200 Free",
-"50 Fly",
-"100 Fly",
-"200 Fly",
-"50 Breast",
-"100 Breast",
-"200 Breast",
-"50 Back",
-"100 Back",
-"200 Back",
-"100 IM",
-"200 IM",
-"400 IM",
-] 
-variable = tk.StringVar(root)
-variable.set(OptionList[0])
+num2Label = tk.Label(root, text = str(nums[1]), font = ("Helvetica",size))
+num2Label.grid(row = 0, column = 2)
 
-dropdownlabel = tk.Label(root, text = "Pick Event")
-dropdownlabel.config(anchor = tk.W)
-dropdownlabel.pack(fill = tk.BOTH)
+equalLabel = tk.Label(root, text = "=", font = ("Helvetica",size))
+equalLabel.grid(row = 0, column = 3)
 
-dropdown = tk.OptionMenu(root, variable, *OptionList)
-dropdown.config(width=45)
-dropdown.pack()
+entry = tk.Entry(root, width = 2, font = ("Helvetica",size))
+entry.grid(row = 0, column = 4)
+
+checkbtn = tk.Button(root, text = "CHECK", highlightbackground = "#3E4149", command = runMe, font = ("Helvetica",size))
+checkbtn.grid(row = 1, column = 0, columnspan = 5, sticky = "nesw")
+
+speakbtn = tk.Button(root, text = "SAY", highlightbackground = "#3E4149", command = say, font = ("Helvetica",size))
+speakbtn.grid(row = 2, column = 0, columnspan = 5, sticky = "nesw")
+
+output = tk.Text(root, height = 10, width = 30)
+output.config(state = "disabled")
+output.grid(row = 3, column = 0, columnspan = 5)
 
 
-SwimmerNumber = tk.Label(root, text = "Number of Swimmers: ")
-SwimmerNumber.config(anchor = tk.W)
-SwimmerNumber.pack(fill = tk.BOTH)
 
-SwimmerNumberBox = tk.Entry(root)
-SwimmerNumberBox.config()
-SwimmerNumberBox.pack(fill = tk.BOTH)
+
 
 
 root.mainloop()
-print("End Program")
