@@ -59,57 +59,38 @@ def resetText():
     main = LabelFrame(root, padx=50, pady=5)
     main.grid(row = 0, column = 2)
     for i in range(len(text)-1):
-        # Removes any trailing spaces in the sentence
         sentence = text[i].strip()
-        # If the sentence is the current sentence that the user should read, make it orange, otherwise, make it normal
         if i == cur:
             Label(main, text=sentence, fg="orange").grid(row=i, column=0)
         else:
             Label(main, text=sentence).grid(row=i, column=0)
 
-# Takes the user to the reading page
 def goReadText(content):
     print(content)
-    # Gets main, text, and cur variables
     global main
     global text
     global cur
-    # Resets the current counter to 0, as when opening a new text, it should automatically start at the beginning
     cur = 0
-    # Resets 'main' frame
     main.grid_forget()
     main = LabelFrame(root, padx=50, pady=5)
     main.grid(row = 0, column = 2)
-    # Set the text equal to the content string
     text = content
-    # Turns the text into an array, split into strings every time there is a period
-    # NOTE: THIS MEANS SENTENCES ENDING WITH A ! OR A ?, OR EVEN WITH A ; INSIDE WILL NOT WORK
-    # Why, you ask, don't you make it work, then?
-    # no
     text = text.split(".")
-    # Loops through the length of the text
-    # NOTE: THIS ASSUMES THE LAST SENTENCE OF THE TEXT WILL END IN A PERIOD, OTHERWISE THE LAST SENTENCE OF THE TEXT WILL BE SKIPPED
     for i in range(len(text)-1):
-        # Removes any trailing spaces
         sentence = text[i].strip()
-        # If it's the current sentence the user should read, make it orange
         if i == cur:
             Label(main, text=sentence, fg="orange").grid(row=i, column=0)
         else:
             Label(main, text=sentence).grid(row=i, column=0)
 
-# Send the user to the add page, where they can add another text
 def goAdd():
-    # Get and reset main
     global main
     main.grid_forget()
     main = LabelFrame(root, padx=50, pady=100)
     main.grid(row = 0, column = 2)
-    # Create a title text box for the title of the text
     title_name = Label(main, text="Title").grid(row=0, column=0)
     title = Entry(main)
     title.grid(row=0, column=1)
-    # Create a content text box, for the content of the text
     content_name = Label(main, text="Content").grid(row=1, column=0)
     content = Entry(main)
     content.grid(row=1, column=1)
